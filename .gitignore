@@ -2,3 +2,4 @@ __pychache__
 *.pkl
 .vscode
 data
+aux_data

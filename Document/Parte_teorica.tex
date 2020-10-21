@@ -344,15 +344,91 @@
     \end{enumerate}  
     \item Consider the regression model $y=X\beta +\epsilon$ with $\epsilon\sim N(0,\sigma^2I)$ furthermore assume that $\beta$ has a normal prior, i.e. $\beta\sim N(0,\tau^2I)$. 
   \begin{enumerate}
-      \item Find the posterior distribution. 
-      \item Compare it with the ridge formula we saw in class. 
-      \item What is the relationship between $\lambda$ in the ridge model and $\sigma^2$ and $\tau^2$?
+      \item \bf{Find the posterior distribution.}
   \end{enumerate}
-    \item Centered Ridge. Suppose that $\bar x= 0$, i.e. the data has been centered. Show that the parameters that minimize $R(\beta,\beta_0) = (y-X\beta-\beta_0 \iota)'(y-X\beta-\beta_0 \iota)+ \lambda\beta'\beta$ are $\beta_0=\bar y$ and $\beta=(X'X+\lambda I)^{-1}X'y$
+
+  The posterior distribution is built as it follows:
+
+  \begin{equation*}
+      \pi(\beta|y,X)=\frac{f(y,X|\beta)p(\beta)}{m(y,X)}
+  \end{equation*}
+  \begin{equation*}
+    \pi(\beta|y,X)=\frac{f(y|X,\beta)f(X|\beta)p(\beta)}{m(y,X)}
+  \end{equation*}
+
+  With the asumption that $f(X|\beta)=f(x)$:
+  \begin{equation*}
+      \pi(\beta|y,X)=f(y|X,\beta)p(\beta)\frac{f(X)}{m(y,X)}
+  \end{equation*}
+  \begin{equation*}
+      \pi(\beta|y,X)\propto\underbrace{f(y|X,\beta)}_\text{likelihood}\underbrace{p(\beta)}_\text{prior}
+  \end{equation*}
+
+  We have the following distribution for $y$:
+  \begin{equation*}
+      L(y|\beta,\sigma^2,X)=\prod_{i=1}^{n}\left(\frac{1}{\sqrt{2\pi\sigma^2}}exp\left({-\frac{1}{2\sigma^2}(y_i-x_i\beta)}\right)\right)
+  \end{equation*}
+  \begin{equation*}
+      L(y|\beta,\sigma^2,X)=(2\pi\sigma^2)^{\frac{n}{2}}{exp\left(-\frac{1}{2\sigma^2}(y-X\beta)'(y-X\beta)\right)}
+  \end{equation*}
+
+  We also have the prior:
+  \begin{equation*}
+      p(\beta)=\left(2\pi\tau^2\right)^{-\frac{1}{2}}exp\left(-\frac{1}{2\tau^2}(\beta'\beta)\right)
+  \end{equation*}
+
+  Which in turn gives the posterior distribution for $\beta$:
+  \begin{equation*}
+      \pi(\beta|y,X)\propto(2\pi\sigma^2)^{\frac{n}{2}}{exp\left(-\frac{1}{2\sigma^2}(y-X\beta)'(y-X\beta)\right)}\left(2\pi\tau^2\right)^{-\frac{1}{2}}exp\left(-\frac{1}{2\tau^2}(\beta'\beta)\right)
+  \end{equation*}
+  \begin{equation*}
+      \pi(\beta|y,X)\propto{exp\left(-\frac{1}{2}\left(\frac{1}{\sigma^2}{(y-X\beta)'(y-X\beta)}+\frac{1}{\tau^2}\beta'\beta\right)\right)}
+  \end{equation*}
   
-    \item Suppose that we have the following regression model  $y=X\beta +\epsilon$, and decide to do the following: Augment the centered matrix $X$ with $p$ additional rows with $\sqrt{\lambda}$, and augment $y$ with zeros. Show that this procedures renders the ridge regression estimates, is there a link to the leverage statistic?
-  
-    \item Reducing elastic net to lasso. Suppose that you have the following functions $EL(\beta) = (y-X\beta)^2+ \lambda_2 \beta^2+ \lambda_1|\beta|$ and $L(\beta) = (\tilde{y}-\tilde{X}\beta)^2+ c \lambda_1|\beta|$ where $c=(1+\lambda_2)^{\frac{-1}{2}}$ show that these two problems are equivalent when $\tilde{y}$ and $\tilde{X}$ are the augmented data versions of the previous exercise.
+  With this given, we can find the following distribution of the posterior:
+  \begin{equation*}
+      \Sigma=\left(\frac{1}{\sigma^2}X'X+\frac{1}{T}\right), \text{where $T=\tau^2I$}
+  \end{equation*}
+  \begin{equation*}
+      \mu=\frac{1}{\sigma^2}\Sigma{X'y}\Rightarrow\mu=\frac{1}{\sigma^2}\left(\frac{1}{\sigma^2}X'X+\frac{1}{T}\right)X'y
+  \end{equation*}
+  Implying:
+  \begin{equation*}
+      \beta|y,X\sim{N}(\mu,\Sigma)
+  \end{equation*}
+
+  \begin{enumerate}[resume]   
+      \item \bf{Compare it with the ridge formula we saw in class.} 
   \end{enumerate}
+
+  The following formula is the ridge formula for $\hat{\beta}$:
+  \begin{equation*}
+      \hat{\beta}_R=(X'X+\lambda{I})X'y
+  \end{equation*}
+
+  Which is similar to the estimation using a Bayesian estimation approach:
+
+  \begin{equation*}
+      \hat{\beta}_{Bayesian}=\frac{1}{\sigma^2}\left(\frac{1}{\sigma^2}X'X+\frac{1}{T}\right)X'y
+  \end{equation*}
+
+  \begin{enumerate}[resume]    
+      \item \bf{What is the relationship between $\lambda$ in the ridge model and $\sigma^2$ and $\tau^2$?}
+  \end{enumerate}
+  
+  As we see in the previous point, the Bayesian estimation method allows us to see how the shrinkage of the estimation towards the prior or the data depends on the variance observed in the data $\sigma^2$ and the variance of the prior $\tau^2$.
+
+  \begin{equation*}
+      \lambda\approx\frac{\sigma^2}{\tau^2}
+  \end{equation*}
+
+    \item \bf{Centered Ridge. Suppose that $\bar x= 0$, i.e. the data has been centered. Show that the parameters that minimize $R(\beta,\beta_0) = (y-X\beta-\beta_0 \iota)'(y-X\beta-\beta_0 \iota)+ \lambda\beta'\beta$ are $\beta_0=\bar y$ and $\beta=(X'X+\lambda I)^{-1}X'y$}
+\end{enumerate}
+\begin{enumerate}[resume]  
+    \item \bf{Suppose that we have the following regression model  $y=X\beta +\epsilon$, and decide to do the following: Augment the centered matrix $X$ with $p$ additional rows with $\sqrt{\lambda}$, and augment $y$ with zeros. Show that this procedures renders the ridge regression estimates, is there a link to the leverage statistic?}
+\end{enumerate}
+\begin{enumerate}[resume]    
+    \item \bf{Reducing elastic net to lasso. Suppose that you have the following functions $EL(\beta) = (y-X\beta)^2+ \lambda_2 \beta^2+ \lambda_1|\beta|$ and $L(\beta) = (\tilde{y}-\tilde{X}\beta)^2+ c \lambda_1|\beta|$ where $c=(1+\lambda_2)^{\frac{-1}{2}}$ show that these two problems are equivalent when $\tilde{y}$ and $\tilde{X}$ are the augmented data versions of the previous exercise.}
+\end{enumerate}
 
 \end{document}

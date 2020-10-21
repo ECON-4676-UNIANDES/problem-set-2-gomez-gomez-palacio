@@ -1,0 +1,358 @@
+\documentclass[12pt,onecolumn]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%          				PACKAGES  				              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[margin=1.5in]{geometry}
+\usepackage{authblk}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{placeins}
+\usepackage{amsfonts}
+\usepackage{comment}
+\usepackage{a4wide,graphicx,color}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage[table]{xcolor}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{dcolumn}
+\usepackage{color,soul}
+\usepackage{threeparttable}
+\usepackage[capposition=top]{floatrow}
+\usepackage[labelsep=period]{caption}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{multicol}
+\usepackage[bottom]{footmisc}
+\setlength\footnotemargin{5pt}
+\usepackage{longtable}
+\usepackage{chronosys}
+\usepackage{physics}
+\catcode`\@=11
+\def\chron@selectmonth#1{\ifcase#1\or Jan\or Feb\or Mar\or Apr\or May\or Jun\or Jul\or Aug\or Sep\or Oct\or Nov\or Dec\fi}
+
+%% BibTeX settings
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\bibpunct{(}{)}{,}{a}{,}{,}
+
+%% markup commands for code/software
+\let\code=\texttt
+\let\pkg=\textbf
+\let\proglang=\textsf
+\newcommand{\file}[1]{`\code{#1}'}
+\newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
+\urlstyle{same}
+
+%% paragraph formatting
+\renewcommand{\baselinestretch}{1}
+
+%% \usepackage{Sweave} is essentially
+\RequirePackage[T1]{fontenc}
+\RequirePackage{ae,fancyvrb}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{fontshape=sl}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{fontshape=sl}
+\newenvironment{Schunk}{}{}
+
+% Defines columns for tables
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+\usepackage{bbm}
+\usepackage{enumitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             Commands           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\distas}[1]{\mathbin{\overset{#1}{\kern\z@\sim}}}%
+\newsavebox{\mybox}\newsavebox{\mysim}
+\newcommand{\distras}[1]{%
+  \savebox{\mybox}{\hbox{\kern3pt$\scriptstyle#1$\kern3pt}}%
+  \savebox{\mysim}{\hbox{$\sim$}}%
+  \mathbin{\overset{#1}{\kern\z@\resizebox{\wd\mybox}{\ht\mysim}{$\sim$}}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     			TITLE, AUTHORS AND DATE    			  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Problem Set 2}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Econ 4676: Big Data and Machine Learning for Applied Economics}
+\author{Daniel Gómez Salazar\thanks{d.gomezs@uniandes.edu.co}, Lucas Gómez Tobón\thanks{l.gomezt@uniandes.edu.co}, José Daniel Palacio Murillo \thanks{jd.palacio@uniandes.edu.co}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Theory Exercises}
+
+\begin{enumerate}
+    \item Suppose you have the following spatial model $y=\rho W y + X\beta + WX\theta  +\epsilon$ with $|\rho|<1$  this is sometimes known as the Spatial Durbin Model
+    \begin{enumerate}
+      \item First consider the following scenario  $\beta=\theta=0$. 
+        \begin{enumerate}
+            \item \bf{Write the Likelihood function. Can you find a closed form for the parameter estimators? Don't forget to be specific on the assumptions you make.}
+        \end{enumerate}
+
+        \begin{equation*}
+            y=\rho{Wy}+\epsilon
+        \end{equation*}
+
+        We take into consideration the following asumptions:
+
+        \begin{itemize}
+            \item $\lvert \rho \rvert < 1$
+            \item $\epsilon \sim N(0,\sigma^2)$
+            \item w is exogenous
+        \end{itemize}
+
+        With this being said we can now define $y$:
+        \begin{equation*}
+            \begin{split}
+                y-\rho{Wy}=\epsilon \\
+                (I_n-\rho{W})y=\epsilon \\
+                y=(I_n-\rho{W})^{-1}\epsilon
+            \end{split}
+        \end{equation*}
+        Therefore, the likelihood function can be defined as:
+        \begin{equation*}
+            L(y)=\left(\frac{1}{2\pi}\right)^\frac{n}{2}\cdot{\lvert{det(v(y))\rvert}^{-\frac{1}{2}}}exp\left({-\frac{1}{2}}{\left(y-E(y)\right)'}{v(y)^{-1}}{\left(y-E(y)\right)}\right)
+        \end{equation*}
+        To fin the MLE we need $E[y]$ and $v(y)$:
+        \begin{equation*}
+            \begin{split}
+                E[y]=E\left[(I_n-\rho{W})^{-1}E(\epsilon)\right] \\
+                \text{we assume that $\rho$ is given and $\epsilon \distras{i.i.d} N(0,\sigma^2)$} \\
+                \Rightarrow E[y]=0
+            \end{split}    
+        \end{equation*}
+        Now we find $v(y)$
+        \begin{equation*}
+            \begin{split}
+                v(y)=E[yy']-E[y]E[y]' \\
+                E[yy']=E\left[\left(\left(I_n-\rho{W}\right)^{-1}\epsilon\right)\cdot\left(\left(I_n-\rho{W}\right)^{-1}\epsilon\right)'\right] \\
+                E[yy']=E\left[\left(I_n-\rho{W}\right)^{-1}\epsilon\epsilon'\left(\left(I_n-\rho{W}\right)^{-1}\right)'\right] \\
+                E[yy']=E\left[\left(I_n-\rho{W}\right)^{-1}\left(\left(I_n-\rho{W}\right)^{-1}\right)'\sigma^2\right] \\
+                E[yy']=\underbrace{\left[(I_n-\rho{W})'(I_n-\rho{W})\right]^{-1}}_\text{$\Omega$}\sigma^2
+            \end{split}
+        \end{equation*}
+        \begin{equation*}
+            v(y)=\sigma^2\Omega
+        \end{equation*}
+        Now, it is possible to define the likelihood function:
+        \begin{equation*}
+            L(\rho,\sigma^2,y)=\left(\frac{1}{2\pi}\right)^\frac{n}{2}\cdot{\lvert{\sigma^2\Omega\rvert}^{-\frac{1}{2}}}\cdot{exp\left({-\frac{1}{2}}{\left(y-0\right)'}{\left(\sigma^2\Omega\right)^{-1}}{\left(y-0\right)}\right)}
+        \end{equation*}
+        \begin{equation*}
+            L(\rho,\sigma^2,y)=\left(\frac{1}{2\pi}\right)^\frac{n}{2}\cdot{\lvert{\sigma^2\Omega\rvert}^{-\frac{1}{2}}}\cdot{exp\left({-\frac{1}{2\sigma^2}}{\left((I_n-\rho{W})^{-1}\epsilon\right)'}{\Omega^{-1}}{\left((I_n-\rho{W})^{-1}\epsilon\right)}\right)} 
+        \end{equation*}
+        \begin{equation*}
+            \begin{split}
+                L(\rho,\sigma^2,y)=\left(\frac{1}{2\pi}\right)^\frac{n}{2}\cdot{\lvert{\sigma^2\Omega\rvert}^{-\frac{1}{2}}}\cdot\\
+                {exp\left({-\frac{1}{2\sigma^2}}\left(\epsilon'\underbrace{\left(I_n-\rho{W})'\right)^{-1}(I_n-\rho{W})'}_\text{I}\underbrace{(I_n-\rho{W})(I_n-\rho{W})^{-1}}_\text{I}\epsilon\right)\right)} \\
+            \end{split}
+        \end{equation*}
+        \begin{equation*}
+            L(\rho,\sigma^2,y)=\left(\frac{1}{2\pi}\right)^\frac{n}{2}\cdot{\lvert{\sigma^2\Omega\rvert}^{-\frac{1}{2}}}\cdot{exp\left({-\frac{1}{2\sigma^2}}\epsilon'\epsilon\right)}
+        \end{equation*}
+        
+        We use the log function:
+        \begin{equation*}
+            l(\sigma^2,\rho,y)={-\frac{n}{2}}\ln(2\pi)-{\frac{1}{2}}\ln\left(\lvert\sigma^2\Omega\rvert\right)-{\frac{1}{2\sigma^2}}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y
+        \end{equation*}
+        note that $\lvert\sigma^2\Omega\rvert=\sigma^{2n}\lvert\Omega\rvert$, also $\lvert\Omega\rvert=\lvert(I_n-\rho{W})\rvert^{-2}$
+        \begin{equation*}
+            \begin{split}
+            l(\rho,\sigma^2,y)={-\frac{n}{2}}\ln(2\pi)-{\frac{1}{2}}(n)\ln(\sigma^2)-{\frac{n}{2}}(-2)\ln(\lvert{I-\rho{W}}\rvert) \\
+            -{\frac{1}{2\sigma^2}}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y
+            \end{split}
+        \end{equation*}
+        \begin{equation*}
+            l(\rho,\sigma^2,y)=-{\frac{n}{2}}ln(2\pi)-{\frac{n}{2}}ln(\sigma^2)+n\ln(\lvert{I-\rho{W}}\rvert)-{\frac{1}{2\sigma^2}}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y
+        \end{equation*}
+        Ord (1975) showed that
+        \begin{equation*}
+            \lvert{I-\rho{W}}\rvert=\prod_{i=1}^{n}(1-\rho{W_i}), \text{where $W_i$ is the eigenvalue of i.}
+        \end{equation*}
+        \begin{equation*}
+            l(\rho,\sigma^2,y)=-{\frac{n}{2}}ln(2\pi)-{\frac{n}{2}}ln(\sigma^2)+n\Sigma\ln(1-\rho{W_i})-{\frac{1}{2\sigma^2}}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y
+        \end{equation*}
+        \begin{equation*}
+            l(\sigma^2,y|\rho)=-{\frac{n}{2}}ln(2\pi)-{\frac{n}{2}}ln(\sigma^2)+n\Sigma\ln(1-\rho{W_i})-{\frac{1}{2\sigma^2}}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y
+        \end{equation*}
+        \begin{equation*}
+            \bullet \quad \pdv{l}{\sigma^2}=-{\frac{n}{2}\frac{1}{\sigma^2}}+\frac{1}{2}\frac{1}{\sigma^4}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y=0
+        \end{equation*}
+        \begin{equation*}
+            \frac{1}{2}\frac{1}{\sigma^4}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y={\frac{n}{2}\frac{1}{\sigma^2}}
+        \end{equation*}
+        \begin{equation*}
+            \boxed{\sigma^2(\rho)=\frac{1}{n}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y}=\frac{\epsilon'\epsilon}{n}
+        \end{equation*}
+        \begin{equation*}
+            \bullet \quad \pdv{l}{\rho}=n\Sigma\frac{-W_i}{1-\rho{W_i}}+\frac{1}{\sigma^2}\left(y'(I-\rho{W})'Wy\right)=0
+        \end{equation*}
+        Since $\rho$ cannot be derived analytically, $\rho$ mmust be obtained from an explicit maximization of a concentrated log-likelihood function using numerical optimization:
+        \begin{equation*}
+            l(\rho)=-{\frac{n}{2}}ln(2\pi)-{\frac{n}{2}}ln(\sigma^2(\rho))+n\Sigma\ln(1-\rho{W_i})-{\frac{1}{2\sigma^2(\rho)}}\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y
+        \end{equation*}
+        \begin{equation*}
+            \sigma^2_{ML}(\hat{\rho})=\frac{1}{n}\left((I_n-\hat{\rho}{W})y\right)'(I_n-\hat{\rho}{W})y
+        \end{equation*}
+        \begin{enumerate}[resume]
+            \item \bf{Suppose instead you use MCO, would you obtain the same estimates?}
+        \end{enumerate}
+        \begin{equation*}
+            y=(I_n-\rho{W})^{-1}\epsilon
+        \end{equation*}
+        We now minimize the squared error:
+        \begin{equation*}
+            \underset{\rho}{min} \quad e'e=\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y
+        \end{equation*}
+        Is not possible to fin a closed form for the estimates $\hat{\rho}_{OLS}$ and $\hat{\sigma}^2_{OLS}$. Therefore:
+        \begin{equation*}
+            \hat{\sigma}^2_{OLS}\neq\hat{\sigma}^2_{ML} \quad ; \quad \hat{\rho}_{OLS}\neq\hat{\rho}_{ML}
+        \end{equation*}
+        \begin{equation*}
+            \left[\rho\right]: \quad -2y'(I-\hat{\rho}W)'Wy=0
+        \end{equation*}
+        \begin{equation*}
+            y'(I-\hat{\rho}W')Wy=0
+        \end{equation*}
+        \begin{equation*}
+            (y'-\hat{\rho}y'W')Wy=0
+        \end{equation*}
+        \begin{equation*}
+            y'Wy-\hat{\rho}y'W'Wy=0
+        \end{equation*}
+        \begin{equation*}
+            \hat{\rho}y'W'Wy=y'Wy
+        \end{equation*}
+        \begin{equation*}
+            \hat{\rho}_{OLS}=y'Wy(y'W'Wy)^{-1}
+        \end{equation*}
+        We also have:
+        \begin{equation*}
+            \hat{\sigma}^2_{OLS}=\frac{e'e}{n-k}=\frac{\left((I_n-\rho{W})y\right)'(I_n-\rho{W})y}{n-k}\neq\hat{\sigma}^2_{ML}
+        \end{equation*}
+      \item Now consider that $\rho=0$, and let's proceed as before:
+        \begin{enumerate}
+            \item \bf{Write the Likelihood function. Can you find a closed form for the parameter estimators? Don't forget to be specific on the assumptions you make.}
+        \end{enumerate}
+        \begin{equation*}
+            y=X{\beta}+WX\theta+\epsilon; \quad \epsilon \distras{i.i.d}N(0,\sigma^2)
+        \end{equation*}
+        \begin{equation*}
+            y=z\gamma+\epsilon; \quad z=[X,WX] \text{and} \gamma=[\beta,\theta]
+        \end{equation*}
+        Therefore:
+        \begin{equation*}
+            L(y)=\left(\frac{1}{2\pi}\right)^\frac{n}{2}\cdot{\lvert{det(v(y))\rvert}^{-\frac{1}{2}}}exp\left({-\frac{1}{2}}{\left(y-E(y)\right)'}{v(y)^{-1}}{\left(y-E(y)\right)}\right)
+        \end{equation*}
+        \begin{equation*}
+            L(y)=\left(\frac{1}{2\pi}\right)^\frac{n}{2}\cdot{\lvert{det(v(y))\rvert}^{-\frac{1}{2}}}exp\left({-\frac{1}{2}}{\left(y-z\gamma\right)'}{v(y)^{-1}}{\left(y-z\gamma\right)}\right)
+        \end{equation*}
+        \begin{equation*}
+            \Rightarrow l(y)={-\frac{n}{2}}\ln(2\pi)-{\frac{n}{2}}\ln(\sigma^2))-{\frac{1}{2\sigma^2}}(y-z\gamma)'(y-z\gamma)
+        \end{equation*}
+        \begin{equation*}
+            \pdv{l}{\sigma^2}=-{\frac{n}{2}\frac{1}{\sigma^2}}+\frac{1}{2}\frac{1}{\sigma^4}(y-z\gamma)'(y-z\gamma)=0
+        \end{equation*}
+        \begin{equation*}
+            \Rightarrow \hat{\sigma}^2=\frac{1}{n}(y-z\gamma)'(y-z\gamma)
+        \end{equation*}
+        Concentrated likelihood
+        \begin{equation*}
+            l^c(y|\gamma,z)=-\frac{n}{2}\ln(2\pi)-\frac{n}{2}ln\left(\frac{1}{n}(y-z\gamma)'(y-z\gamma)\right)-\frac{n}{2}
+        \end{equation*}
+        \begin{equation*}
+            \left[\gamma\right]: \quad \frac{n}{(y-z\hat{\gamma})'(y-z\hat{\gamma})}\cdot{z'(y-z\hat{\gamma})}=0
+        \end{equation*}
+        \begin{equation*}
+            z'y=z'z\hat{\gamma}
+        \end{equation*}
+        \begin{equation*}
+            \boxed{\hat{\gamma_{ML}}=(z'z)^{-1}(z'y)}
+        \end{equation*}
+        \begin{equation*}
+            \boxed{\hat{\sigma_{ML}}^2=\frac{1}{n}\left(y-z(z'z)^{-1}(z'y)\right)'\left(y-z(z'z)^{-1}(z'y)\right)}=\frac{\epsilon'\epsilon}{n}
+        \end{equation*}
+        \begin{enumerate}[resume]
+            \item \bf{Suppose instead you use MCO, would you obtain the same estimates?} 
+        \end{enumerate}  
+        In that case we have:
+        \begin{equation*}
+            \underset{\gamma}{min} \quad e'e=(y-z\gamma)'(y-z\gamma)
+        \end{equation*}
+        \begin{equation*}
+            \left[\gamma\right]: \quad -2z'(y-z\gamma)=0
+        \end{equation*}
+        \begin{equation*}
+            \boxed{\hat{\gamma}_{OLS}=(z'z)^{-1}(z'y)} \Rightarrow \quad \hat{\gamma}_{ML}=\hat{\gamma}_{OLS}
+        \end{equation*}
+        \begin{equation*}
+            \boxed{\hat{\sigma}^2_{OLS}=\frac{\epsilon'\epsilon}{n-k-1}} \Rightarrow \quad \hat{\sigma}^2_{ML}\neq\hat{\sigma}^2_{OLS}
+        \end{equation*}
+        And it can be proved as it follows:
+        \begin{equation*}
+            y=z\gamma+\epsilon \Rightarrow \quad \epsilon=y-z\gamma
+        \end{equation*}
+       \begin{equation*}
+           \hat{\epsilon}=y-z\hat{\gamma} \Rightarrow \quad \hat{\epsilon}=y-z(z'z)^{-1}z'y \Rightarrow \quad \hat{\epsilon}=(I-z(z'z^{-1}z)y) 
+       \end{equation*}
+       \begin{equation*}
+           \hat{\epsilon}=My, \text{where $M$ is an idempotent matrix}
+       \end{equation*} 
+       \begin{equation*}
+           var(\epsilon)=E\left[(\epsilon-E[\epsilon])'(\epsilon-E[\epsilon])\right]=E[\epsilon'\epsilon], \text{since $E(\epsilon)=0$}
+       \end{equation*}
+       \begin{equation*}
+           E[\epsilon'\epsilon|z]=E[y'M'My|z]=E[y'My|z]
+       \end{equation*}
+       The scalar $\epsilon'M\epsilon$ is a $1x1$ matrix, so its equal to its trace. By using the result on cyclic perutations
+       \begin{equation*}
+           E[tr(\epsilon'M\epsilon)|z]=E[tr(M\epsilon\epsilon')|z]
+       \end{equation*}
+       Since $M$ is function of $z$:
+       \begin{equation*}
+           tr\left(E[\epsilon\epsilon'|z]\right)=tr(M\sigma^2I)=\sigma^2tr(M)
+       \end{equation*}
+       \begin{equation*}
+           tr\left((I-z(z'z)^{-1}z)\right)=tr(I)-tr(z(z'z)^{-1}z)=n-k-1
+       \end{equation*}
+       \begin{equation*}
+           E[\epsilon'\epsilon|z]=(n-k-1)\sigma^2
+       \end{equation*}
+       \begin{equation*}
+           \Rightarrow \quad \hat{\sigma}^2=\frac{\epsilon'\epsilon}{n-k-1}
+       \end{equation*}
+    \end{enumerate}  
+    \item Consider the regression model $y=X\beta +\epsilon$ with $\epsilon\sim N(0,\sigma^2I)$ furthermore assume that $\beta$ has a normal prior, i.e. $\beta\sim N(0,\tau^2I)$. 
+  \begin{enumerate}
+      \item Find the posterior distribution. 
+      \item Compare it with the ridge formula we saw in class. 
+      \item What is the relationship between $\lambda$ in the ridge model and $\sigma^2$ and $\tau^2$?
+  \end{enumerate}
+    \item Centered Ridge. Suppose that $\bar x= 0$, i.e. the data has been centered. Show that the parameters that minimize $R(\beta,\beta_0) = (y-X\beta-\beta_0 \iota)'(y-X\beta-\beta_0 \iota)+ \lambda\beta'\beta$ are $\beta_0=\bar y$ and $\beta=(X'X+\lambda I)^{-1}X'y$
+  
+    \item Suppose that we have the following regression model  $y=X\beta +\epsilon$, and decide to do the following: Augment the centered matrix $X$ with $p$ additional rows with $\sqrt{\lambda}$, and augment $y$ with zeros. Show that this procedures renders the ridge regression estimates, is there a link to the leverage statistic?
+  
+    \item Reducing elastic net to lasso. Suppose that you have the following functions $EL(\beta) = (y-X\beta)^2+ \lambda_2 \beta^2+ \lambda_1|\beta|$ and $L(\beta) = (\tilde{y}-\tilde{X}\beta)^2+ c \lambda_1|\beta|$ where $c=(1+\lambda_2)^{\frac{-1}{2}}$ show that these two problems are equivalent when $\tilde{y}$ and $\tilde{X}$ are the augmented data versions of the previous exercise.
+  \end{enumerate}
+
+\end{document}

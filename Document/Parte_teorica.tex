@@ -81,6 +81,51 @@
   \mathbin{\overset{#1}{\kern\z@\resizebox{\wd\mybox}{\ht\mysim}{$\sim$}}}%
 }
 
+\setlength{\parindent}{0pt}
+
+\makeatletter
+\renewcommand*\l@paragraph{\@dottedtocline{5}{7.0em}{4.1em}}
+\renewcommand*\l@subparagraph{\@dottedtocline{6}{10em}{5em}}
+\makeatother
+
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+\titlecontents{subsubsubsection}[9em]{}{\contentslabel{3.9em}}%
+{\hspace*{-1.2em}}{\titlerule*[0.675pc]{.}\contentspage}
+
+\makeatletter
+\newcounter{subsubsubsection}[subsubsection]
+\setcounter{subsubsubsection}{1}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\renewcommand{\thesubsubsubsection}{\thesubsubsection.\@arabic\c@subsubsubsection}
+
+\titleclass{\subsubsubsection}{straight}[\subsubsection]
+\titleformat{\subsubsubsection}{\sf}{\thetitle}{0.9em}{}[]                       
+\titlespacing{\subsubsubsection}{0pt}{3.25ex plus 1ex minus 0.2ex}{1.5ex plus 0.2ex}
+
+\renewcommand\paragraph{\@startsection{paragraph}{5}%
+    {\z@}%
+    {3.25ex \@plus1ex \@minus.2ex}%
+    {-1em}%
+    {\normalfont\normalsize\bfseries}%
+}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}%
+    {\parindent}%
+    {3.25ex \@plus1ex \@minus .2ex}%
+    {-1em}%
+    {\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+\usepackage{hyperref}
+\makeatletter
+\newcommand*{\toclevel@subsubsubsection}{4}%
+\renewcommand*{\toclevel@paragraph}{5}%
+\renewcommand*{\toclevel@subparagraph}{6}%
+\makeatother
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     			TITLE, AUTHORS AND DATE    			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -494,6 +539,7 @@ The following equation shows the related estimator for the model:
 \begin{equation*}
     \hat{\beta}=(X'X+\lambda{I})^{-1}X'y
 \end{equation*}
+
 One can also take into consideration the $H$ matrix also called the projection matrix which contains in the diagonal the $\lambda$ used to construct the ridge estimator, showing the connection between the leverage statistic and the ridge regression.
 \begin{equation*}
     H=X(X'X)^{-1}X'=\begin{pmatrix}
@@ -502,15 +548,54 @@ One can also take into consideration the $H$ matrix also called the projection m
         X & \sqrt{\lambda}
     \end{pmatrix}
 \end{equation*}
+
 leading to the $\hat{y}$:
 \begin{equation*}
     \hat{y}=\begin{pmatrix}
         X \\ \sqrt{\lambda}
     \end{pmatrix}(X'X+\lambda{I})X'y
 \end{equation*}
-Therefore we can assume that the ridge estimator follows the same procedure as the leverage statistic in which we want to reduce the overfitting through introducing new information to the model.
+
+Therefore we can assume that the ridge estimator follows the same procedure as the leverage statistic in which we want to use the sensibility of the data to each observation in contrast to the ridge intuition that wants to reduce the overfitting through introducing new information to the model.
 \begin{enumerate}[resume]    
     \item \bf{Reducing elastic net to lasso. Suppose that you have the following functions $EL(\beta) = (y-X\beta)^2+ \lambda_2 \beta^2+ \lambda_1|\beta|$ and $L(\beta) = (\tilde{y}-\tilde{X}\beta)^2+ c \lambda_1|\beta|$ where $c=(1+\lambda_2)^{\frac{-1}{2}}$ show that these two problems are equivalent when $\tilde{y}$ and $\tilde{X}$ are the augmented data versions of the previous exercise.}
 \end{enumerate}
 
+The estimator for the reduced version of the problem is a lasso estimator which follows the form:
+
+\begin{equation*}
+    \hat{\beta}=\hat{\beta}_{Pseudo-OLS}-\frac{c\lambda_1}{2}
+\end{equation*}
+
+However the $\hat{\beta}_{Pseudo-OLS}$ is the same we had in the previous point, a ridge estimator thanks to the augmented form of both $y$ and $X$.
+\begin{equation*}
+    \hat{\beta}=(X'X-\lambda_2{I})X'y-\frac{c\lambda_1}{2}
+\end{equation*}
+
+Or which can be rewritten as
+\begin{equation*}
+    \hat{\beta}=\frac{\hat{\beta}_{OLS}}{1+\lambda_2}-\frac{c\lambda_1}{2}=\frac{1}{1+\lambda_2}\left(\hat{\beta}_{OLS}-\frac{\lambda_1}{2}\right)
+\end{equation*}
+
+Now that we have the estimator we can compare it to the elastic net one:
+\begin{equation*}
+    \hat{\beta}_{EL}=\frac{\left(\hat{\beta}_{OLS}-\frac{\lambda_1}{2}\right)}{1+\lambda_2}
+\end{equation*}
+
+We can then conclude that both of this approaches yield the same result, therefore reducing the elastic net to lasso.
+
 \end{document}
+
+
+
+\begin{equation*}
+    L(\beta)=\left(\begin{pmatrix}
+        y \\ 0
+    \end{pmatrix}-\begin{pmatrix}
+        X \\ \sqrt{\lambda_2} 
+    \end{pmatrix}\beta\right)'\left(\begin{pmatrix}
+        y \\ 0
+    \end{pmatrix}-\begin{pmatrix}
+        X \\ \sqrt{\lambda_2} 
+    \end{pmatrix}\beta\right)+c\lambda\lvert\beta\rvert
+\end{equation*}

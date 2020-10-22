@@ -37,15 +37,23 @@ Also, we use external files from the [Open Data website of the Evanston city](da
 * **food.geojson**: List with the localization of 394 food establishments.
 * [**Data on arrests**](https://data.cityofevanston.org/resource/25em-v4fn.geojson)
 
-The principal data can be downloaded from [here](https://github.com/ECON-4676-UNIANDES/Problem_Sets/tree/master/Problem_Set2/data) and auxiliary data can be accessed [here](empiricos/aux_data/)
+The main data can be downloaded from [here](https://github.com/ECON-4676-UNIANDES/Problem_Sets/tree/master/Problem_Set2/data) and auxiliary data can be accessed [here](empiricos/aux_data/)
 
 
-Some summary statistics can be founded [here](empiricos/Analisis_preliminar.ipynb) 
+Some summary statistics can be found [here](empiricos/Analisis_preliminar.ipynb) 
 
 ## 1. Maps gomelos
+
+We did some really amazing maps, the easiest way to access them is by cloning the repo and opening them in any browser.
+
+
+![](./media/maps.png)
+
+
 1. [Average assessment values](empiricos/Outputs/Average_assessment_values.html)
 2. [Building area to floor ratio](empiricos/Outputs/Building_area_to_floor_ratio.html)
 3. [Assessment values](empiricos/Outputs/Assessment_values.html)
+4. [link to drive where they can be downloaded](https://drive.google.com/drive/folders/1usNDWGDaZh-vdz_O9Z8GbanekB48U3_3?usp=sharing)
 
 In those HTML files, the 3 red markers represent Metra stations, also, the red dashed lines show the rail line. The gray markers represent El Stations and blue dashed lines indicate the trace of the El lines. We noticed a few outliers on the building area to floor ratio. Those observations with a ratio above the 95 percentile were deleted, probably those correspond to buildings with many floors. Additionally, we saw that the properties near the beach are the most expensive. The principal notebook to build this maps is [here](empiricos/Mapas_interactivos.ipynb). 
 

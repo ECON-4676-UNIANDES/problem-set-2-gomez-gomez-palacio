@@ -49,3 +49,18 @@ Some summary statistics can be founded [here](empiricos/Analisis_preliminar.ipyn
 
 In those HTML files, the 3 red markers represent Metra stations, also, the red dashed lines show the rail line. The gray markers represent El Stations and blue dashed lines indicate the trace of the El lines. We noticed a few outliers on the building area to floor ratio. Those observations with a ratio above the 95 percentile were deleted, probably those correspond to buildings with many floors. Additionally, we saw that the properties near the beach are the most expensive. The principal notebook to build this maps is [here](empiricos/Mapas_interactivos.ipynb). 
 
+## 3. Heavy lifting: 
+
+This work heavily relies on cloud computing. Most of the calculations that required expensive operations where done in paralell (we are still figuring out distibuted computing). This can be seen specially in the following scripts: 
+
+1. [server.py](./empiricos/server.py) 
+2. [spreg.py](./empiricos/spreg.py) 
+
+These scripts were executed on a 64 cores - 240 gb of memory machine (for this particular task core count was more important than memory). We used our preferred cloud computing platform which is google cloud.
+
+![](./media/scs.jpeg)
+
+
+
+
+

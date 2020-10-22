@@ -7,7 +7,7 @@
 - [Theoretical excercises ✍️](#features)
 - [Empirical problems](empiricos/)
   - [Data](#data)
-  - [1. Maps gomelos 📍](#1.mapsgomelos)
+  - [1. Maps gomelos 📍](#1-maps-gomelos)
   - [2. Out of sight, but not out of mind 📈](#add-your-own-content)
   - [Scripts](empiricos/)
 

@@ -719,7 +719,9 @@ for i in resultado:
 # now everything goes into parcels
 
 for i in prov_dict.keys():
-    prov_dict[i].rename({"result" : i}, inplace = True)
+
+    prov_dict[i].rename(columns = {"result" : i}, inplace = True)
+
     parcels = parcels.merge( 
         prov_dict[i],
         right_index = True, 
@@ -814,7 +816,7 @@ for i in prov_dict.keys():
 # # now everything goes into parcels
 
 # for i in prov_dict.keys():
-#     prov_dict[i].rename({"result" : i}, inplace = True)
+#     prov_dict[i].rename(columns = {"result" : i}, inplace = True)
 #     parcels = parcels.merge( 
 #         prov_dict[i],
 #         right_index = True, 

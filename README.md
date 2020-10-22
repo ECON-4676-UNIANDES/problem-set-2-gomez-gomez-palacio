@@ -43,5 +43,6 @@ Some summary statistics can be founded here:
 ## 1. Maps gomelos
 1. [Average assessment values](empiricos/Outputs/Average_assessment_values.html)
 2. [Building area to floor ratio](empiricos/Outputs/Building_area_to_floor_ratio.html)
+3. [Assessment values](empiricos/Outputs/Assessment_values.html)
 
 In those HTML files, the 3 red markers represent Metra stations, also, the red dashed lines show the rail line. The gray markers represent El Stations and blue dashed lines indicate the trace of the El lines. We noticed a few outliers on the building area to floor ratio. Those observations with a ratio above the 95 percentile were deleted, probably those correspond to buildings with many floors. Additionally, we saw that the properties near the beach are the most expensive.

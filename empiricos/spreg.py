@@ -21,6 +21,8 @@ with open('./aux_data/parcels.pkl', 'rb') as f:
 
 parcels = parcels.to_crs({'init': 'epsg:3310'})
 
+# this finds the minimum threshold at which all parcels have at least one 
+# neighboor, it is extremely intensive in memory 50Gb + use it wisely
 
 def multiprocessing_func(n):
     w =  (
@@ -60,7 +62,19 @@ if __name__ == '__main__':
         process.join()
     
 
-results = np.array((50,2), dtype = int)
+min([i[0] if i[1] == 0 else 8000 for i in resultado])
 
-for i in range(50):
-    results[i,:] = resultado[i]
+########################################################################
+
+
+w =  (
+   weights.
+   distance.
+   DistanceBand.
+   from_dataframe(
+       parcels, 
+       152, 
+       binary=True
+       )
+    )
+

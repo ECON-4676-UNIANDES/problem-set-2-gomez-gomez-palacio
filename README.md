@@ -58,7 +58,10 @@ We did some really amazing maps, the easiest way to access them is by cloning th
 In those HTML files, the 3 red markers represent Metra stations, also, the red dashed lines show the rail line. The gray markers represent El Stations and blue dashed lines indicate the trace of the El lines. We noticed a few outliers on the building area to floor ratio. Those observations with a ratio above the 95 percentile were deleted, probably those correspond to buildings with many floors. Additionally, we saw that the properties near the beach are the most expensive. The principal notebook to build this maps is [here](empiricos/Mapas_interactivos.ipynb). 
 
 ## 2. Out of sight, but not out of mind
-Our principal results are shown in [this notebook](./empiricos/modelos_chingones.ipynb). We define closeness between blocks with queen criterion (two units are close to one another if they share a side or an edge). With this criterion, we builded the $W$ matrix to estimate an Spatial Lag Model (SLM).
+
+Our principal results are shown in [this notebook](./empiricos/modelos_chingones.ipynb). We define closeness between blocks with queen criterion (two units are close to one another if they share a side or an edge). With this criterion, we built the $W$ matrix to estimate an Spatial Lag Model (SLM).
+
+
 
 However, we perform some previous steps to tidy the data. We correct the skewness of many variables, dropped outliers, and imputed data. We filter the observations to only use the rows corresponding to buildings and selected the principal features of our models with Lasso.
 
@@ -68,11 +71,13 @@ In the exercise of choosing the best alpha for the lasso model, we find that whe
 
 Models like Gradient Boosting regression and Random Forest show better performance to different specifications. Our best model was a Gradient Boosting regression that had an MAE of 0.074 thanks to parameter tuning.
 
+We also tried not successfully to estimate a Spatial Lag Model using a matrix in which proximity was defined using distance. Any observations that were closer than the minimum distance for which every parcel had a neighbour was considered a neighbour. This model failed to converge and used quite a lot of resources, you can find it here [here](empiricos/spreg_1.py).
+
 **SCATTER AQUI**
 
 ## 3. Heavy lifting: 
 
-This work heavily relies on cloud computing. Most of the calculations that required expensive operations where done in paralell (we are still figuring out distibuted computing). This can be seen specially in the following scripts: 
+This work heavily relies on cloud computing, specially when defining the spatial variables. Most of the calculations that required expensive operations where done in paralell (we are still figuring out distibuted computing). This can be seen specially in the following scripts: 
 
 1. [server.py](./empiricos/server.py) 
 2. [spreg.py](./empiricos/spreg.py) 
@@ -87,7 +92,7 @@ These scripts were executed on a 64 cores - 240 gb of memory machine (for this p
 1. We made some improvements to "Lake Michigan" so it's shoreline is adjusted perfectly to the city. The script that makes this can be found inside [server.py](./empiricos/server.py) and is based on [Water bodies](https://data.cityofevanston.org/Information-Technology-includes-maps-geospatial-da/Water-bodies/fdqb-ycz3). A geojson versión of the improved version can be found here [lake.geojson](./empiricos/Outputs/lake.geojson) . 
 
 2. On top of the amazing html maps, there are also some convensional versions that can be found here:
-  - [Assessed Value](empiricos/Outputs/Assessed Value.png) 
+  - [Assessed_Value](empiricos/Outputs/Assessed Value.png) 
   - [Big map](empiricos/Outputs/graph_1.png)
   - [ratio](empiricos/Outputs/ratio.png) 
   

@@ -101,7 +101,7 @@ for i in a_data_list:
 
 # all the data is in the correct projection
 
-
+m_d = {**m_d, **a_d}
 
 del(a_d, a_data_list)
 

@@ -7,7 +7,7 @@
 - [Theoretical excercises ✍️](#features)
 - [Empirical problems](empiricos/)
   - [Data](#data)
-  - [1. Maps gomelos 📍](empiricos/Outputs)
+  - [1. Maps gomelos 📍](#1.mapsgomelos)
   - [2. Out of sight, but not out of mind 📈](#add-your-own-content)
   - [Scripts](empiricos/)
 
@@ -25,6 +25,14 @@ We used geographic data from the city of Evanston, a city in the Chicagoland are
 * **Rail Lines.zip**: geographic lines correspondig to the rail lines. 
 
 Also, we use external files from the [Open Data website of the Evanston city](data.cityofevanston.org) to enrich our models:
-* 
+* **Beaches.zip**.
+* **city.zip**: Enhanced shapefile from Evanston. The geographical borders are updated.
+* **parcels_melo.pkl**: Clean version of evanston_parcel_data.csv.
+* **tracts.zip**: Enhanced shapefile from tracts. The geographical borders are updated.
+* **Trees.zip**.
+* **Water bodies.zip**.
+* ****.
 
 The principal data can be downloaded from [here](https://github.com/ECON-4676-UNIANDES/Problem_Sets/tree/master/Problem_Set2/data) and auxiliary data can be accessed [here](empiricos/aux_data/)
+
+## 1. Maps gomelos

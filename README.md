@@ -61,6 +61,10 @@ These scripts were executed on a 64 cores - 240 gb of memory machine (for this p
 ![](./media/scs.jpeg)
 
 
+## Final notes: 
+
+We made some improvements to "Lake Michigan" so it's shoreline is adjusted perfectly to the city. The script that makes this can be found inside [server.py](./empiricos/server.py) and is based on [Water bodies](https://data.cityofevanston.org/Information-Technology-includes-maps-geospatial-da/Water-bodies/fdqb-ycz3). A geojson versión of the improved version can be found here [lake.geojson](./empiricos/Outputs/lake.geojson) . 
+
 
 
 

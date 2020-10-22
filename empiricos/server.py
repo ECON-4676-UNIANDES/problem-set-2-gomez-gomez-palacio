@@ -670,7 +670,7 @@ vars = [
     'cw'
 ]
 
-aux = np.linspace(0, len(parcels.index),300 ,dtype = int)
+aux = np.linspace(0, len(parcels.index),65 ,dtype = int)
 divi = []
 prev = 0 
 for i in aux[1:]:
@@ -778,7 +778,7 @@ complete_list = []
 
 vars = ['Trees', 'arrest', 'food']
 
-aux = np.linspace(0, len(parcels.index), 300, dtype = int)
+aux = np.linspace(0, len(parcels.index), 65, dtype = int)
 divi = []
 prev = 0 
 for i in aux[1:]:

@@ -62,10 +62,9 @@ In those HTML files, the 3 red markers represent Metra stations, also, the red d
 Our principal results are shown in [this notebook](./empiricos/modelos_chingones.ipynb). We define closeness between blocks with queen criterion (two units are close to one another if they share a side or an edge). With this criterion, we built the $W$ matrix to estimate an Spatial Lag Model (SLM).
 
 
-
 However, we perform some previous steps to tidy the data. We correct the skewness of many variables, dropped outliers, and imputed data. We filter the observations to only use the rows corresponding to buildings and selected the principal features of our models with Lasso.
 
-**LINE RARA AQUÍ**
+![](./media/line.png)
 
 In the exercise of choosing the best alpha for the lasso model, we find that when alpha is small the regularization model cannot capture all the complexities in the data. Therefore, we had the insight to try nonlinear models.
 
@@ -73,7 +72,7 @@ Models like Gradient Boosting regression and Random Forest show better performan
 
 We also tried not successfully to estimate a Spatial Lag Model using a matrix in which proximity was defined using distance. Any observations that were closer than the minimum distance for which every parcel had a neighbour was considered a neighbour. This model failed to converge and used quite a lot of resources, you can find it here [here](empiricos/spreg_1.py).
 
-**SCATTER AQUI**
+![](./media/scatter.png)
 
 ## 3. Heavy lifting: 
 
@@ -92,7 +91,7 @@ These scripts were executed on a 64 cores - 240 gb of memory machine (for this p
 1. We made some improvements to "Lake Michigan" so it's shoreline is adjusted perfectly to the city. The script that makes this can be found inside [server.py](./empiricos/server.py) and is based on [Water bodies](https://data.cityofevanston.org/Information-Technology-includes-maps-geospatial-da/Water-bodies/fdqb-ycz3). A geojson versión of the improved version can be found here [lake.geojson](./empiricos/Outputs/lake.geojson) . 
 
 2. On top of the amazing html maps, there are also some convensional versions that can be found here:
-  - [Assessed_Value](empiricos/Outputs/Assessed Value.png) 
+  - [Assessed_Value](empiricos/Outputs/Assessed%20Value.png) 
   - [Big map](empiricos/Outputs/graph_1.png)
   - [ratio](empiricos/Outputs/ratio.png) 
   

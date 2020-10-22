@@ -10,6 +10,7 @@
   - [Data](#data)
   - [1. Maps gomelos 📍](#1-maps-gomelos)
   - [2. Out of sight, but not out of mind 📈](#2-out-of-sight-but-not-out-of-mind)
+  - 3. Heavy lifting
   - [Scripts](empiricos/)
 
 ## Data
@@ -64,7 +65,7 @@ Our principal results are shown in [this notebook](./empiricos/modelos_chingones
 
 However, we perform some previous steps to tidy the data. We correct the skewness of many variables, dropped outliers, and imputed data. We filter the observations to only use the rows corresponding to buildings and selected the principal features of our models with Lasso.
 
-![](./media/line.png)
+![](./media/line.jpeg)
 
 In the exercise of choosing the best alpha for the lasso model, we find that when alpha is small the regularization model cannot capture all the complexities in the data. Therefore, we had the insight to try nonlinear models.
 
@@ -72,7 +73,7 @@ Models like Gradient Boosting regression and Random Forest show better performan
 
 We also tried not successfully to estimate a Spatial Lag Model using a matrix in which proximity was defined using distance. Any observations that were closer than the minimum distance for which every parcel had a neighbour was considered a neighbour. This model failed to converge and used quite a lot of resources, you can find it here [here](empiricos/spreg_1.py).
 
-![](./media/scatter.png)
+![](./media/scatter.jpeg)
 
 ## 3. Heavy lifting: 
 

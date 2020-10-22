@@ -630,8 +630,8 @@ def multiprocessing_func(a_list):
         for c in l_object.index:
             
             current_obj = (
-                    l_object.loc[i,'geometry'].coords.xy[1][0],
-                    l_object.loc[i,'geometry'].coords.xy[0][0],
+                    l_object.loc[c,'geometry'].coords.xy[1][0],
+                    l_object.loc[c,'geometry'].coords.xy[0][0],
                 )
 
             aux = haversine.haversine(

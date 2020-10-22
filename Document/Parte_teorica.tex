@@ -464,6 +464,51 @@ where $\iota'\iota'=1$ and $\iota'y$ calculates the mean of the variable $y$:
 \begin{enumerate}[resume]  
     \item \bf{Suppose that we have the following regression model  $y=X\beta +\epsilon$, and decide to do the following: Augment the centered matrix $X$ with $p$ additional rows with $\sqrt{\lambda}$, and augment $y$ with zeros. Show that this procedures renders the ridge regression estimates, is there a link to the leverage statistic?}
 \end{enumerate}
+
+We define the model as it follows in order to find the estimator $\beta$:
+
+\begin{gather}
+    \begin{pmatrix}
+        y \\
+        0
+    \end{pmatrix} =
+   \begin{pmatrix}
+       X \\
+       \sqrt{\lambda}
+   \end{pmatrix}\beta+\epsilon
+\end{gather}
+
+The following equation shows the related estimator for the model:
+\begin{gather}
+    \hat{\beta}=\left(\begin{pmatrix}
+        X&\sqrt{\lambda}
+    \end{pmatrix}\begin{pmatrix}
+        X \\ \sqrt{\lambda}
+    \end{pmatrix}\right)^{-1}
+    \left(\begin{pmatrix}
+        X & \sqrt{\lambda}
+    \end{pmatrix}\begin{pmatrix}
+        y \\ 0
+    \end{pmatrix}\right)
+\end{gather}
+\begin{equation*}
+    \hat{\beta}=(X'X+\lambda{I})^{-1}X'y
+\end{equation*}
+One can also take into consideration the $H$ matrix also called the projection matrix which contains in the diagonal the $\lambda$ used to construct the ridge estimator, showing the connection between the leverage statistic and the ridge regression.
+\begin{equation*}
+    H=X(X'X)^{-1}X'=\begin{pmatrix}
+        X \\ \sqrt{\lambda}
+    \end{pmatrix}(X'X+\lambda{I})^{-1}\begin{pmatrix}
+        X & \sqrt{\lambda}
+    \end{pmatrix}
+\end{equation*}
+leading to the $\hat{y}$:
+\begin{equation*}
+    \hat{y}=\begin{pmatrix}
+        X \\ \sqrt{\lambda}
+    \end{pmatrix}(X'X+\lambda{I})X'y
+\end{equation*}
+Therefore we can assume that the ridge estimator follows the same procedure as the leverage statistic in which we want to reduce the overfitting through introducing new information to the model.
 \begin{enumerate}[resume]    
     \item \bf{Reducing elastic net to lasso. Suppose that you have the following functions $EL(\beta) = (y-X\beta)^2+ \lambda_2 \beta^2+ \lambda_1|\beta|$ and $L(\beta) = (\tilde{y}-\tilde{X}\beta)^2+ c \lambda_1|\beta|$ where $c=(1+\lambda_2)^{\frac{-1}{2}}$ show that these two problems are equivalent when $\tilde{y}$ and $\tilde{X}$ are the augmented data versions of the previous exercise.}
 \end{enumerate}

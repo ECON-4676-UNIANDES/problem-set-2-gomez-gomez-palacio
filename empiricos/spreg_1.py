@@ -164,7 +164,7 @@ def multiprocessing_func(n):
 if __name__ == '__main__':
     q = multiprocessing.Queue()  
     processes = []
-    for i in [i for i in range(400, 410)]:
+    for i in [i for i in [50, 100, 150, 200]]:
         p = multiprocessing.Process(target=multiprocessing_func, 
                                     args=(i,))
         processes.append(p)
@@ -191,7 +191,7 @@ w =  (
    DistanceBand.
    from_dataframe(
        par, 
-       414, 
+       409, 
        binary=False
        )
     )

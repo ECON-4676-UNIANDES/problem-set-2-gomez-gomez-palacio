@@ -67,7 +67,7 @@ However, we perform some previous steps to tidy the data. We correct the skewnes
 
 ![](./media/line.jpeg)
 
-In the exercise of choosing the best alpha for the lasso model, we find that when alpha is small the regularization model cannot capture all the complexities in the data. Therefore, we had the insight to try nonlinear models.
+In the exercise of choosing the best alpha for the lasso model, we find that when alpha is small the model tend to overfit because the high freedom. We had the insight to try nonlinear models that controls the overfitting problem.
 
 Models like Gradient Boosting regression and Random Forest show better performance to different specifications. Our best model was a Gradient Boosting regression that had an MAE of 0.074 thanks to parameter tuning.
 

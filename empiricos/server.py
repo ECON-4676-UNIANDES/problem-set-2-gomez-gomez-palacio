@@ -272,6 +272,10 @@ m_d['Lake Michigan'] = gpd.GeoDataFrame(
     ) 
 
 
+## export new lake michigan:
+
+m_d['Lake Michigan'].to_file("./Outputs/lake.geojson", driver='GeoJSON')
+
 ########################################################################
 # graph 1
 
@@ -368,7 +372,7 @@ plt.tick_params(
 
 # plot and save
 ax.legend(loc = 6)
-plt.savefig('./plots/graph_1.png')
+plt.savefig('./Outputs/graph_1.png')
 plt.close()
 
 
@@ -602,7 +606,7 @@ for i in ['ratio', 'Assessed Value'] :
 
     ax.legend(loc = 6)
     ax.legend(loc = 6)
-    plt.savefig(f'./plots/{i}.png')
+    plt.savefig(f'./Outputs/{i}.png')
     plt.close()
 
 ########################################################################
@@ -670,7 +674,7 @@ vars = [
     'cw'
 ]
 
-aux = np.linspace(0, len(parcels.index),300 ,dtype = int)
+aux = np.linspace(0, len(parcels.index),65 ,dtype = int)
 divi = []
 prev = 0 
 for i in aux[1:]:
@@ -778,7 +782,7 @@ complete_list = []
 
 vars = ['Trees', 'arrest', 'food']
 
-aux = np.linspace(0, len(parcels.index), 300, dtype = int)
+aux = np.linspace(0, len(parcels.index), 65, dtype = int)
 divi = []
 prev = 0 
 for i in aux[1:]:

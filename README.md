@@ -24,4 +24,7 @@ We used geographic data from the city of Evanston, a city in the Chicagoland are
 * **Metra Stops.zip**: Metra is the commuter rail system that serves the greater Chicago area. The Union Pacific North Line (UP-N), which connects Chicago’s northern suburbs to downtown Chicago, has stops at Main, Davis, and Central in Evanston. This compressed files contains 3 points.
 * **Rail Lines.zip**: geographic lines correspondig to the rail lines. 
 
-Also, we use external files from the [Open Data website of the Evanston city](data.cityofevanston.org)
+Also, we use external files from the [Open Data website of the Evanston city](data.cityofevanston.org) to enrich our models:
+* 
+
+The principal data can be downloaded from [here](https://github.com/ECON-4676-UNIANDES/Problem_Sets/tree/master/Problem_Set2/data) and auxiliary data can be accessed [here](empiricos/aux_data/)

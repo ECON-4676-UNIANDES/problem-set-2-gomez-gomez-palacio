@@ -71,9 +71,11 @@ In the exercise of choosing the best alpha for the lasso model, we find that whe
 
 Models like Gradient Boosting regression and Random Forest show better performance to different specifications. Our best model was a Gradient Boosting regression that had an MAE of 0.074 thanks to parameter tuning.
 
+![](./media/scatter.jpeg)
+
 We also tried not successfully to estimate a Spatial Lag Model using a matrix in which proximity was defined using distance. Any observations that were closer than the minimum distance for which every parcel had a neighbour was considered a neighbour. This model failed to converge and used quite a lot of resources, you can find it here [here](empiricos/spreg_1.py).
 
-![](./media/scatter.jpeg)
+
 
 ## 3. Heavy lifting: 
 

@@ -40,30 +40,6 @@ The principal data can be downloaded from [here](https://github.com/ECON-4676-UN
 
 Some summary statistics can be founded here:
 
-
-| Variable |   Total |   Percent |
-|:---------------------------|--------:|----------:|
-| Multi-Family Indicator     |   22322 |  1        |
-| Renovation                 |   22269 |  0.997626 |
-| Total Building Square Feet |   21810 |  0.977063 |
-| Sale Price                 |   19849 |  0.889212 |
-| SalePrice_l                |   19849 |  0.889212 |
-| Sale Date                  |   19637 |  0.879715 |
-| Deed No.                   |   19637 |  0.879715 |
-| Attic Finish               |   16041 |  0.718618 |
-| Condo Class Factor         |   13044 |  0.584356 |
-| Roof Material              |    9278 |  0.415644 |
-| Garage 2 Size              |    9278 |  0.415644 |
-| Garage 1 Material          |    9278 |  0.415644 |
-| Garage 1 Attachment        |    9278 |  0.415644 |
-| Garage 1 Area              |    9278 |  0.415644 |
-| Apartments                 |    9278 |  0.415644 |
-| Garage 2 Material          |    9278 |  0.415644 |
-| Site Desireability         |    9278 |  0.415644 |
-| Garage 2 Attachment        |    9278 |  0.415644 |
-| Type of Residence          |    9278 |  0.415644 |
-| Garage 2 Area              |    9278 |  0.415644 |
-
 ## 1. Maps gomelos
 1. [Average assessment values](empiricos/Outputs/Average_assessment_values.html)
 2. [Building area to floor ratio](empiricos/Outputs/Building_area_to_floor_ratio.html)

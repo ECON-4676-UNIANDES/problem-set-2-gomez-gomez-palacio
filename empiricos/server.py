@@ -24,7 +24,7 @@ for i in range(len(parcels.index)):
     polygon_geom.append(p)
 
 aux_df = gpd.GeoDataFrame(
-    index=parcels.index, crs = {'init': 'epsg:4019'}, 
+    index=parcels.index, crs = {'init': 'epsg:4326'}, 
     geometry= polygon_geom
     )
 
@@ -33,6 +33,8 @@ aux_df = gpd.GeoDataFrame(
 parcels = gpd.GeoDataFrame(parcels).merge(
     aux_df, left_index = True, right_index = True
     )
+
+parcels = parcels.set_crs({'init': 'epsg:4326'})
 
 
 
@@ -611,61 +613,79 @@ for i in ['ratio', 'Assessed Value'] :
 #### create spatial variables:
 # type 1: 
 # minimum distance to:
-    # rail lines
-    # el stations
-    # el lines
-    # beaches
+    # Major Roads
+    # Lake Michigan
+    # Rail Lines
+    # Metra Stops
+    # El Lines
+    # El Stations
+    # Beaches 
+    # bici
+    # cw
 
-# type 2: 
-    # number of n in a radious of n meters
 
 def multiprocessing_func(a_list):
 
     parce, l_object, name = a_list
-
-    parce['result'] = None
-
+    parce = parce.to_crs({'init': 'epsg:3310'})
+    l_object = l_object.to_crs({'init': 'epsg:3310'})
+    
     def aux_fun(c_p):
-        counter = 0
-        for c in l_object.index:
-            
-            current_obj = (
-                    l_object.loc[c,'geometry'].coords.xy[1][0],
-                    l_object.loc[c,'geometry'].coords.xy[0][0],
+
+        part_result = np.empty(len(l_object))
+
+        for counter,c in enumerate(l_object.index):
+
+            part_result[counter] = (
+                l_object.loc[c,'geometry'].
+                distance(c_p)
                 )
 
-            aux = haversine.haversine(
-                current_obj, 
-                c_p, 
-                unit=haversine.Unit.METERS
-                )
-            if aux < 200:
-                counter += 1
+        return part_result.min()
 
-        return counter
 
     for i in parce.index:
-        current_parce = (
-                            parce.loc[i,'geometry'].coords.xy[1][0],
-                            parce.loc[i,'geometry'].coords.xy[0][0],
-                        )
+        current_parce = parce.loc[i,'geometry']
 
         parce.loc[i,'result'] = aux_fun(current_parce)
     
     q.put([parce.loc[:,['result']], name])
 
 
-# create a list for the different things that we need distance to:
+
+
+
+
 
 complete_list = []
-for t_o in ['Trees', 'arrest', 'food']: 
-    for i in m_d['cblock']['TRACT2000'].unique():
+vars = [
+    'Major Roads',
+    'Lake Michigan',
+    'Rail Lines',
+    'Metra Stops',
+    'El Lines',
+    'El Stations',
+    'Beaches',
+    'bici',
+    'cw'
+]
+
+aux = np.linspace(0, len(parcels.index),65,dtype = int)
+divi = []
+prev = 0 
+for i in aux[1:]:
+    current_divi = [i for i in range(prev, i)]
+    prev = i 
+    divi.append(current_divi)
+
+
+for t_o in vars: 
+    for i in divi:
         complete_list.append([
-            parcels.loc[parcels['Census Tract'].eq(i), ['geometry']],
+            parcels.loc[i, ['geometry']],
             m_d[t_o].loc[:, ['geometry']], 
             t_o
         ])
-
 
 if __name__ == '__main__':
     q = multiprocessing.Queue()  
@@ -700,10 +720,107 @@ for i in resultado:
 
 for i in prov_dict.keys():
     prov_dict[i].rename({"result" : i}, inplace = True)
-    parcels = parcels.merge(
-        parcels, 
+    parcels = parcels.merge( 
         prov_dict[i],
         right_index = True, 
         left_index = True, 
         how = 'left'
         )
+
+
+
+
+########################################################################
+# type 2: 
+    # number of n in a radious of n meters
+
+# def multiprocessing_func(a_list):
+
+#     parce, l_object, name = a_list
+
+#     parce['result'] = None
+
+#     def aux_fun(c_p):
+#         counter = 0
+#         for c in l_object.index:
+            
+#             current_obj = (
+#                     l_object.loc[c,'geometry'].coords.xy[1][0],
+#                     l_object.loc[c,'geometry'].coords.xy[0][0],
+#                 )
+
+#             aux = haversine.haversine(
+#                 current_obj, 
+#                 c_p, 
+#                 unit=haversine.Unit.METERS
+#                 )
+#             if aux < 200:
+#                 counter += 1
+
+#         return counter
+
+#     for i in parce.index:
+#         current_parce = (
+#                             parce.loc[i,'geometry'].coords.xy[1][0],
+#                             parce.loc[i,'geometry'].coords.xy[0][0],
+#                         )
+
+#         parce.loc[i,'result'] = aux_fun(current_parce)
+    
+#     q.put([parce.loc[:,['result']], name])
+
+
+# # create a list for the different things that we need distance to:
+
+# complete_list = []
+# for t_o in ['Trees', 'arrest', 'food']: 
+#     for i in m_d['cblock']['TRACT2000'].unique():
+#         complete_list.append([
+#             parcels.loc[parcels['Census Tract'].eq(i), ['geometry']],
+#             m_d[t_o].loc[:, ['geometry']], 
+#             t_o
+#         ])
+
+
+# if __name__ == '__main__':
+#     q = multiprocessing.Queue()  
+#     processes = []
+#     for i in complete_list:
+#         p = multiprocessing.Process(target=multiprocessing_func, 
+#                                     args=(i,))
+#         processes.append(p)
+#         p.start()
+    
+    
+    
+#     resultado = []    
+#     for process in processes:
+#         a = q.get()
+#         resultado.append(a)
+#     for process in processes:
+#         process.join()
+
+
+# # now join the results
+# ready = []
+# prov_dict = {}
+# for i in resultado:
+#     if i[1] in ready:
+#         prov_dict[i[1]] = prov_dict[i[1]].append(i[0])
+#     else:
+#         prov_dict[i[1]] = i[0]
+#         ready.append(i[1])
+
+# # now everything goes into parcels
+
+# for i in prov_dict.keys():
+#     prov_dict[i].rename({"result" : i}, inplace = True)
+#     parcels = parcels.merge( 
+#         prov_dict[i],
+#         right_index = True, 
+#         left_index = True, 
+#         how = 'left'
+#         )
+
+
+

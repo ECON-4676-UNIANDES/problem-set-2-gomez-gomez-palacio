@@ -36,3 +36,7 @@ Also, we use external files from the [Open Data website of the Evanston city](da
 The principal data can be downloaded from [here](https://github.com/ECON-4676-UNIANDES/Problem_Sets/tree/master/Problem_Set2/data) and auxiliary data can be accessed [here](empiricos/aux_data/)
 
 ## 1. Maps gomelos
+1. [Average assessment values](/Outputs/Average_assessment_values.html)
+2. [Building area to floor ratio](/Outputs/Building_area_to_floor_ratio.html)
+
+In those HTML files, the 3 red markers represent Metra stations, also, the red dashed lines show the rail line. The gray markers represent El Stations and blue dashed lines indicate the trace of the El lines.

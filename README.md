@@ -5,7 +5,7 @@
 
 ## Table of contents
 
-- [Theoretical excercises ✍️](#features)
+- [Theoretical exercises ✍️](Document/)
 - [Empirical problems](empiricos/)
   - [Data](#data)
   - [1. Maps gomelos 📍](#1-maps-gomelos)

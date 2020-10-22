@@ -10,7 +10,7 @@
   - [Data](#data)
   - [1. Maps gomelos 📍](#1-maps-gomelos)
   - [2. Out of sight, but not out of mind 📈](#2-out-of-sight-but-not-out-of-mind)
-  - 3. Heavy lifting
+  - [3. Heavy lifting](https://media0.giphy.com/media/pOKrXLf9N5g76/giphy.gif?cid=ecf05e47vhr8linl8x764m4h0r007rjs1vqmpm0c0sehj3hj&rid=giphy.gif)
   - [Scripts](empiricos/)
 
 ## Data

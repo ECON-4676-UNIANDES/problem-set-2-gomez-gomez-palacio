@@ -12,14 +12,13 @@ import pickle
 import pysal as ps
 from pysal.lib import weights
 
-
-with open('./aux_data/parcels.pkl', 'rb') as f:
+with open('./aux_data/tidy_data.pkl', 'rb') as f:
     parcels = pickle.load(f)
 
 
 # project in a flat plane
 
-parcels = parcels.to_crs({'init': 'epsg:3310'})
+par = parcels.to_crs({'init': 'epsg:3310'})
 
 # this finds the minimum threshold at which all parcels have at least one 
 # neighboor, it is extremely intensive in memory 50Gb + use it wisely
@@ -30,7 +29,7 @@ def multiprocessing_func(n):
        distance.
        DistanceBand.
        from_dataframe(
-           parcels, 
+           par, 
            n, 
            binary=True
            )
@@ -46,7 +45,7 @@ def multiprocessing_func(n):
 if __name__ == '__main__':
     q = multiprocessing.Queue()  
     processes = []
-    for i in [i for i in range(150,200)]:
+    for i in [i for i in range(100,200)]:
         p = multiprocessing.Process(target=multiprocessing_func, 
                                     args=(i,))
         processes.append(p)
@@ -62,7 +61,7 @@ if __name__ == '__main__':
         process.join()
     
 
-min([i[0] if i[1] == 0 else 8000 for i in resultado])
+aux = min([i[0] if i[1] == 0 else 8000 for i in resultado])
 
 ########################################################################
 
@@ -73,8 +72,8 @@ w =  (
    DistanceBand.
    from_dataframe(
        parcels, 
-       152, 
-       binary=True
+       aux, 
+       binary=False
        )
     )
 

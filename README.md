@@ -31,7 +31,10 @@ Also, we use external files from the [Open Data website of the Evanston city](da
 * **tracts.zip**: Enhanced shapefile from tracts. The geographical borders are updated.
 * **Trees.zip**.
 * **Water bodies.zip**.
-* ****.
+* **bici.geojson**: The City of Evanston has approximately 45 miles of protected bike lanes, bike lanes, bike routes and off-street paths. This file contains the polylines of this circuit.
+* **cw.geojson**: Geodatabase with points indication school crosswalks.
+* **food.geojson**: List with the localization of 394 food establishments.
+* [**Data on arrests**](https://data.cityofevanston.org/resource/25em-v4fn.geojson)
 
 The principal data can be downloaded from [here](https://github.com/ECON-4676-UNIANDES/Problem_Sets/tree/master/Problem_Set2/data) and auxiliary data can be accessed [here](empiricos/aux_data/)
 
